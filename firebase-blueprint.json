@@ -1,0 +1,138 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Unique user ID from Firebase Auth" },
+        "username": { "type": "string", "description": "Display username" },
+        "name": { "type": "string", "description": "Full name" },
+        "avatar": { "type": "string", "description": "Avatar URL" },
+        "bio": { "type": "string", "description": "User biography" },
+        "followersCount": { "type": "number", "description": "Number of followers" },
+        "followingCount": { "type": "number", "description": "Number of users followed" },
+        "likesCount": { "type": "number", "description": "Total likes received" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Profile update timestamp" }
+      },
+      "required": ["uid", "username", "createdAt"]
+    },
+    "Video": {
+      "title": "Video",
+      "description": "Video metadata and content",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique video ID" },
+        "uid": { "type": "string", "description": "Uploader's user ID" },
+        "username": { "type": "string", "description": "Uploader's username" },
+        "url": { "type": "string", "description": "Video file URL" },
+        "thumbnail": { "type": "string", "description": "Video thumbnail URL" },
+        "description": { "type": "string", "description": "Video description" },
+        "likes": { "type": "number", "description": "Number of likes" },
+        "comments": { "type": "number", "description": "Number of comments" },
+        "shares": { "type": "number", "description": "Number of shares" },
+        "musicName": { "type": "string", "description": "Name of the audio track" },
+        "category": { "type": "string", "description": "Video category" },
+        "tags": { "type": "array", "items": { "type": "string" }, "description": "Video tags" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Upload timestamp" }
+      },
+      "required": ["uid", "url", "createdAt"]
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "A comment on a video",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique comment ID" },
+        "videoId": { "type": "string", "description": "ID of the video commented on" },
+        "uid": { "type": "string", "description": "Commenter's user ID" },
+        "username": { "type": "string", "description": "Commenter's username" },
+        "text": { "type": "string", "description": "Comment text" },
+        "likes": { "type": "number", "description": "Number of likes on the comment" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Comment timestamp" }
+      },
+      "required": ["videoId", "uid", "text", "createdAt"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "User notification",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique notification ID" },
+        "recipientUid": { "type": "string", "description": "User ID of the recipient" },
+        "type": { "type": "string", "enum": ["like", "comment", "follow", "live"], "description": "Type of notification" },
+        "senderUid": { "type": "string", "description": "User ID of the sender" },
+        "username": { "type": "string", "description": "Username of the sender" },
+        "message": { "type": "string", "description": "Notification message" },
+        "isRead": { "type": "boolean", "description": "Whether the notification has been read" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Notification timestamp" }
+      },
+      "required": ["recipientUid", "type", "createdAt"]
+    },
+    "Follow": {
+      "title": "Follow",
+      "description": "A follow relationship between two users",
+      "type": "object",
+      "properties": {
+        "followerUid": { "type": "string", "description": "User ID of the follower" },
+        "followingUid": { "type": "string", "description": "User ID of the user being followed" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Follow timestamp" }
+      },
+      "required": ["followerUid", "followingUid", "createdAt"]
+    },
+    "Like": {
+      "title": "Like",
+      "description": "A like on a video or live stream",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "User ID of the liker" },
+        "targetId": { "type": "string", "description": "ID of the liked video or live stream" },
+        "type": { "type": "string", "enum": ["video", "live_stream"], "description": "Type of the liked item" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Like timestamp" }
+      },
+      "required": ["userId", "targetId", "type", "createdAt"]
+    },
+    "LiveStream": {
+      "title": "LiveStream",
+      "description": "Live stream metadata",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Streamer's user ID" },
+        "username": { "type": "string", "description": "Streamer's username" },
+        "title": { "type": "string", "description": "Stream title" },
+        "category": { "type": "string", "description": "Stream category" },
+        "viewers": { "type": "number", "description": "Number of viewers" },
+        "likes": { "type": "number", "description": "Number of likes" },
+        "isLive": { "type": "boolean", "description": "Whether the stream is currently live" },
+        "thumbnail": { "type": "string", "description": "Stream thumbnail URL" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Stream start timestamp" }
+      },
+      "required": ["uid", "username", "title", "category", "isLive", "createdAt"]
+    },
+    "LiveChat": {
+      "title": "LiveChat",
+      "description": "A message in a live stream chat",
+      "type": "object",
+      "properties": {
+        "streamId": { "type": "string", "description": "ID of the live stream" },
+        "uid": { "type": "string", "description": "Sender's user ID" },
+        "username": { "type": "string", "description": "Sender's username" },
+        "text": { "type": "string", "description": "Message text" },
+        "color": { "type": "string", "description": "Username color in chat" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Message timestamp" }
+      },
+      "required": ["streamId", "uid", "username", "text", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users": { "schema": "User", "description": "User profiles" },
+    "videos": { "schema": "Video", "description": "Videos collection" },
+    "comments": { "schema": "Comment", "description": "Comments collection" },
+    "notifications": { "schema": "Notification", "description": "Notifications collection" },
+    "follows": { "schema": "Follow", "description": "Follow relationships" },
+    "likes": { "schema": "Like", "description": "Likes collection" },
+    "live_streams": { "schema": "LiveStream", "description": "Live streams collection" },
+    "live_chats": { "schema": "LiveChat", "description": "Live stream chat messages" }
+  }
+}

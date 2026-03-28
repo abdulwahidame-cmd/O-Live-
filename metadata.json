@@ -1,0 +1,5 @@
+{
+  "name": "O-Live",
+  "description": "A modern live streaming and short video viewing platform.",
+  "requestFramePermissions": ["camera", "microphone"]
+}
